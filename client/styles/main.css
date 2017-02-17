@@ -15,3 +15,10 @@ html, body {
     margin: 0;
     padding: 0;
 }
+.mdl-dialog__content{
+    height: 60vh;
+}
+#maxlot{
+    width: 100%;
+    text-align:center;
+}

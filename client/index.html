@@ -38,9 +38,24 @@
                 <div class="page-content">
                     <div id="map"></div>
                     
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--bottom-right mdl-js-ripple-effect mdl-button--colored">
-                        <i class="material-icons">add</i>
-                    </button>
+                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--bottom-right mdl-js-ripple-effect mdl-button--colored" id="show-dialog" type="button">
+                        <i class="material-icons">add</i></button>
+                    <dialog class="mdl-dialog">
+                        <div class="mdl-dialog__content">
+                          <h3 align="center">Create Lobby</h3>
+                            <p align="center">Lotação</p>
+                            <form  action="#">
+                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="maxlot">
+                                
+                            </form>
+                        </div>
+                        <div class="mdl-dialog__actions mdl-dialog__actions--full-width">
+                                <button type="button" class="mdl-button">Agree</button>
+                                <button type="button" class="mdl-button close">Close</button>
+                        </div>
+                    </dialog>
+                    
+                    
                 </div>
             </main>
             
