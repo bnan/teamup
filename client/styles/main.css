@@ -1,0 +1,17 @@
+.mdl-button--bottom-right {
+    bottom: 45px;
+    padding-top: 24px;
+    position: fixed;
+    right: 24px;
+    z-index: 998;
+}
+
+#map {
+    height: 100vh;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
