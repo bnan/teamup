@@ -51,4 +51,4 @@ def client_fonts(path):
     return send_from_directory('../client/fonts', path)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host = "0.0.0.0", port = 1337)
