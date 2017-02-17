@@ -6,11 +6,11 @@ from flask import Flask, request, send_from_directory, jsonify, session, g, redi
 app = Flask(__name__, static_url_path='')
 
 app.config.update(
-DATABASE=os.path.join(app.root_path, 'teamup.db'),
-DEBUG=False,
-SECRET_KEY='development key',
-USERNAME='admin',
-PASSWORD='default'
+    DATABASE=os.path.join(app.root_path, 'teamup.db'),
+    DEBUG=False,
+    SECRET_KEY='development key',
+    USERNAME='admin',
+    PASSWORD='default'
 )
 
 ################################################################################
@@ -29,6 +29,10 @@ def api_lobies():
 @app.route('/')
 def client_index():
     return open('../client/index.html').read()
+
+@app.route('/login')
+def client_index():
+    return open('../client/login.html').read()
 
 @app.route('/scripts/<path:path>')
 def client_scripts(path):
