@@ -31,7 +31,7 @@ def client_index():
     return open('../client/index.html').read()
 
 @app.route('/login')
-def client_index():
+def client_login():
     return open('../client/login.html').read()
 
 @app.route('/scripts/<path:path>')
