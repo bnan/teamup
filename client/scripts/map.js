@@ -12,7 +12,7 @@ function mapDraw() {
             disableDefaultUI: true
         });
 
-		var url = '/api/getNearbyLobbies?radius=1.5&lat='+position.coords.latitude+'&lon='+position.coords.longitude;
+		var url = '/api/getNearbyLobbies?radius=4&lat='+position.coords.latitude+'&lon='+position.coords.longitude;
 		axios.get(url).then(function(response) {
 			for(const lobby of response.data.lobbies) {
                 console.log(lobby);

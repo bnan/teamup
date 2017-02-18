@@ -123,6 +123,5 @@ function store() {
     /*Reset fields before close*/
     inputPlayers.value="";
     notes.value="";
-
-    dialog.close();
+    
 }

@@ -16,7 +16,18 @@ function registerDialogAndButton(dialog, button) {
         dialog.close();
     });
 }
+function registerDialog(dialog) {
+    dialog = document.querySelector(dialog);
+
+    dialog.querySelector('.close').addEventListener('click', function() {
+        dialog.close();
+    });
+
+    dialog.querySelector('.submit').addEventListener('click', function() {
+        dialog.close();
+    });
+}
+
 
 registerDialogAndButton('#create-lobby', '#create-lobby-btn');
-
-registerDialogAndButton('#join-lobby', null);
+registerDialog('#join-lobby');
