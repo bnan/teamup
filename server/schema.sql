@@ -33,18 +33,27 @@ CREATE TABLE lobbies(
 INSERT INTO lobbies(sport, description, lat, lon, maximum, current) VALUES(
     'Soccer',
     'Bring a ball',
-    41.205091,
-    -8.4055564,
+    40.204158,
+    -8.409342,
     5,
-    2 
+    3 
 );
 
 INSERT INTO lobbies(sport, description, lat, lon, maximum, current) VALUES(
     'Tennis',
-    'I fucking hate tennis',
-    40.2050591,
-    -7.405564,
+    'I am pretty good at tennis',
+    40.201420,
+    -8.407829,
     2,
+    1 
+);
+
+INSERT INTO lobbies(sport, description, lat, lon, maximum, current) VALUES(
+    'Volleyball',
+    'Just want to have some fun',
+    40.205246,
+    -8.420615,
+    4,
     1 
 );
 

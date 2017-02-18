@@ -6,26 +6,11 @@
         <title>Team Up</title>
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-pink.min.css">
         <link rel="stylesheet" href="styles/main.css">
     </head>
 
     <body>
-    <script>
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '741282629382475',
-            cookie     : true,  // enable cookies to allow the server to access
-            // the session
-            xfbml      : true,  // parse social plugins on this page
-            version    : 'v2.8' // use graph api version 2.8
-        });
-
-        FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-        });
-    };
-    </script>
         <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
@@ -51,7 +36,7 @@
                     <div class="page-content">
                         <button id="button_login" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="fb_login()">Login</button>
 
-                        <div id = "info" class="page-content">
+                        <div id="info" class="page-content">
                             Not Connected to Show Map!
                         </div>
 
@@ -142,7 +127,6 @@
                 </section>
             </main>
         </div>
-
         <script>
         // Load the SDK asynchronously
         (function(d, s, id) {
@@ -153,15 +137,32 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
         </script>
-        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-        <script src="https://code.getmdl.io/1.3.0/material.min.js" defer></script>
+        <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '741282629382475',
+                cookie     : true,  // enable cookies to allow the server to access
+                // the session
+                xfbml      : true,  // parse social plugins on this page
+                version    : 'v2.8' // use graph api version 2.8
+            });
+
+            FB.getLoginStatus(function(response) {
+                statusChangeCallback(response);
+            });
+        };
+        </script>
+        <script src="scripts/axios.min.js"></script>
+        <script src="scripts/push.js"></script>
+        <script src="scripts/material.min.js" defer></script>
+
         <script src="scripts/dom.js"></script>
         <script src="scripts/dialog.js"></script>
         <script src="scripts/map.js"></script>
         <script src="scripts/facebook.js"></script>
         <script src="scripts/api.js"></script>
+
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvgV98SUK1th09t6MvtLm4IcCmE9k1fx0" async defer></script>
-        <script src="https://unpkg.com/push.js@0.0.12"></script>
         <script src="scripts/notifications.js"></script>
     </body>
 </html>
