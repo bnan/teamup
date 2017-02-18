@@ -37,7 +37,7 @@ function statusChangeCallback(response) {
     var info_lobby = document.getElementById('info_lobby');
     var info_account = document.getElementById('info_account');
     var fab = document.getElementById('create-lobby-btn');
-
+    var account = document.getElementById('personal_account')
     if (response.status === 'connected') {
         console.log('Connected');
         mapDraw();
@@ -47,6 +47,10 @@ function statusChangeCallback(response) {
         info_lobby.style.display = "none";
         info_account.style.display = "none";
         fab.style.display = "block";
+        account.style.display = "block"
+    FB.api('/me', function(response) {
+        var im = document.getElementById("profile_pic").setAttribute("src", "http://graph.facebook.com/" + response.id + "/picture?type=normal");
+    });
 
     } else if (response.status === 'not_authorized') {
         console.log('Must Log On App');
@@ -56,6 +60,7 @@ function statusChangeCallback(response) {
         info_lobby.style.display = "block";
         info_account.style.display = "block";
         fab.style.display = "none";
+        account.style.display = "none";
     } else {
         console.log('Must Log On in Facebook');
         mapElement.style.display = 'none';
@@ -64,6 +69,7 @@ function statusChangeCallback(response) {
         info_lobby.style.display = "block";
         info_account.style.display = "block";
         fab.style.display = "none";
+        account.style.display = "none";
     }
 }
 
