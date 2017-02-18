@@ -11,7 +11,7 @@ CREATE TABLE users(
 );
 
 INSERT INTO users(fid, lid) VALUES(100005190632219, 1); 
-INSERT INTO users(fid, lid) VALUES(100006175597255, 1); 
+INSERT INTO users(fid, lid) VALUES(1880378588844643, 1); 
 INSERT INTO users(fid, lid) VALUES(100001906565844, 2); 
 
 /*******************************************************************************
@@ -26,7 +26,6 @@ CREATE TABLE lobbies(
     description text not null,
     lat real not null,
     lon real not null,
-
     maximum integer not null,
     current integer not null
 );
