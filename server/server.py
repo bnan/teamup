@@ -83,6 +83,26 @@ def api_lobbies_get():
     res = { 'lobbies': lobbies }
     return jsonify(**res)
 
+@app.route('/api/userLobby', methods=['GET'])
+def api_userLobby_get():
+	db = db_open()
+	userID = request.args.get('fbtoken')
+	cur = db.execute('SELECT * FROM users WHERE fbtoken = ?', [userID])
+	user = cur.fetchall()
+	cur = db.execute('SELECT * FROM lobbies WHERE id = ?', [user.lid])
+	lobby = cur.fetchall()
+	res = { 'lobby': lobby }
+	return jsonify(**res)
+
+@app.route('/api/lobbyUsers', methods=['GET'])
+def	api_lobbyUsers_get():
+	db = db_open()
+	lobbyID = request.args.get('lid')
+	cur = db.execute('SELECT * FROM users WHERE lid = ?', [lobbyID])
+	users = cur.fetchall()
+	res = { 'users': users }
+	return jsonify(**res)
+
 ################################################################################
 # Client
 ################################################################################
