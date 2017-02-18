@@ -15,16 +15,14 @@ function mapDraw() {
 		var url = '/api/getNearbyLobbies?radius=4&lat='+position.coords.latitude+'&lon='+position.coords.longitude;
 		axios.get(url).then(function(response) {
 			for(const lobby of response.data.lobbies) {
-                console.log(lobby);
 				var marker = new google.maps.Marker({
 					position: { lat: lobby.lat, lng: lobby.lon },
 					map: map,
 					title: lobby.description
 				});
-
     			marker.addListener('click', function() {
         			var dialog = document.getElementById('join-lobby');
-					fillOtherLobby(marker.position.latitude, marker.position.longitude);
+					fillOtherLobby(lobby.lat, lobby.lon);
         			dialog.showModal();
     			});
 			}

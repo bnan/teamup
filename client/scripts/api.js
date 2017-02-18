@@ -53,6 +53,7 @@ function fillSelfLobby() {
 function fillOtherLobby(lat, lon){
 	var url = '/api/getLobby?lat=' + lat + '&lon=' + lon;
 	axios.get(url).then(function(response) {
+		console.log(response);
 		getUsersByLobby(response.data.lobby[0].id, function(response2) {
 				
 			var lobby = document.getElementById("otherlobby");
