@@ -1,3 +1,37 @@
+function fillSelfLobby() {
+	FB.getLoginStatus(function(response) {
+		if(response.status === 'connected'){
+			var req = '/api/getLobbyByUser?fid='.concat(response.authResponse.accessToken);
+			axios.get(req).then(function (response) {
+				req = '/api/getUsersByLobby?lid='.concat(response.data.lobby[0].id);
+				axios.get(req).then(function (response) {
+					var lobby = document.getElementById("lobbylist");
+					for(const user of response.data.users){
+						var li = document.createElement("li");
+						li.setAttribute("class", "mdl-list__item mdl-list__item--threeline");
+						var span = document.createElement("span");
+						span.setAttribute("class", "mdl-list__item-primary-content");
+						var img = document.createElement("img");
+						img.setAttribute("src", "http://graph.facebook.com/" + user.fid + "/picture?type=normal");
+						var name = document.createElement("span");
+						FB.api(
+							"/"+user.fid,
+							function (response) {
+						  		if (response && !response.error) {
+									name.innerHtml = response.name;
+						 		}
+    					});	
+						span.appendChild(img);
+						span.appendChild(name);
+						li.appendChild(span);
+						lobby.appendChild(li);
+					}
+				});
+			});
+		}
+	});
+}
+
 function store() {
     var inputPlayers= document.getElementById("maxplay");
     if(inputPlayers.value==""){
