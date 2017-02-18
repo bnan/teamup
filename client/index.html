@@ -31,6 +31,7 @@
                     <a class="mdl-navigation__link" href="">My Account</a>
                     <a class="mdl-navigation__link" href="">My Lobby</a>
                     <a onclick="fb_logout()" class="mdl-navigation__link" href="">Log Out</a>
+                    <a onclick="notify_user('title','Message')" class="mdl-navigation__link" href="">Notification Test</a>
 
                 </nav>
             </div>
@@ -115,8 +116,9 @@
         <script src="scripts/dialog.js"></script>
         <script src="scripts/map.js"></script>
         <script src="scripts/facebook.js"></script>
-        <script src="scripts/notifications.js"></script>
         <script src="scripts/api.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvgV98SUK1th09t6MvtLm4IcCmE9k1fx0&callback=initMap" async defer></script>
+        <script src="https://unpkg.com/push.js@0.0.12"></script>
+        <script src="scripts/notifications.js"></script>
     </body>
 </html>
