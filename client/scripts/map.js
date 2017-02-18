@@ -1,11 +1,4 @@
-function getPosition() {
-    nav
-}
-
 function mapDraw() {
-    var mapElement = document.getElementById('map');
-    mapElement.style.display = 'block';
-
 	var options = {
 		enableHighAccuracy: false,
 		timeout: 5000,
@@ -18,7 +11,7 @@ function mapDraw() {
             center: { lat: position.coords.latitude, lng: position.coords.longitude },
             disableDefaultUI: true
         });
-        
+
 		var url = '/api/getNearbyLobbies?radius=1.5&lat='+position.coords.latitude+'&lon='+position.coords.longitude;
 		axios.get(url).then(function(response) {
 			for(const lobby of response.data.lobbies) {
