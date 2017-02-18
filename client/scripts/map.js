@@ -24,6 +24,7 @@ function mapDraw() {
 
     			marker.addListener('click', function() {
         			var dialog = document.getElementById('join-lobby');
+					fillOtherLobby(marker.position.latitude, marker.position.longitude);
         			dialog.showModal();
     			});
 			}
