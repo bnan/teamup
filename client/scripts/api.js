@@ -1,34 +1,51 @@
+function getUsersByLobby(lid, cb) {
+	var url = '/api/getUsersByLobby?lid='+lid;
+	axios.get(url).then(function(response) {
+		cb(response);	
+	});
+}
+
+function getLobbyByUser(fid, cb) {
+	var url = '/api/getLobbyByUser?fid='+fid;
+	axios.get(url).then(function(response) {
+		cb(response);	
+	});
+}
+
 function fillSelfLobby() {
-	FB.getLoginStatus(function(response) {
-		if(response.status === 'connected'){
-			var req = '/api/getLobbyByUser?fid='.concat(response.authResponse.accessToken);
-			axios.get(req).then(function (response) {
-				req = '/api/getUsersByLobby?lid='.concat(response.data.lobby[0].id);
-				axios.get(req).then(function (response) {
-					var lobby = document.getElementById("lobbylist");
-					for(const user of response.data.users){
-						var li = document.createElement("li");
-						li.setAttribute("class", "mdl-list__item mdl-list__item--threeline");
-						var span = document.createElement("span");
-						span.setAttribute("class", "mdl-list__item-primary-content");
-						var img = document.createElement("img");
-						img.setAttribute("src", "http://graph.facebook.com/" + user.fid + "/picture?type=normal");
-						var name = document.createElement("span");
-						FB.api(
-							"/"+user.fid,
-							function (response) {
-						  		if (response && !response.error) {
-									name.innerHtml = response.name;
-						 		}
-    					});	
-						span.appendChild(img);
-						span.appendChild(name);
-						li.appendChild(span);
-						lobby.appendChild(li);
-					}
-				});
+	FB.getLoginStatus(function(response1) {
+		getLobbyByUser(response1.authResponse.userID, function(response2) {
+			getUsersByLobby(response2.data.lobby[0].id, function(response3) {
+				var lobby = document.getElementById("lobbylist");
+
+				for(const user of response3.data.users) {
+					var li = document.createElement("li");
+					li.setAttribute("class", "mdl-list__item mdl-list__item--threeline");
+
+					var span = document.createElement("span");
+					span.setAttribute("class", "mdl-list__item-primary-content");
+
+					var img = document.createElement("img");
+					img.setAttribute("src", "http://graph.facebook.com/" + user.fid + "/picture?type=square");
+
+					var name = document.createElement("span");
+					name.setAttribute("id", user.fid);
+					FB.api(
+						"/"+user.fid,
+						function (response4) {
+							if (response4 && !response4.error) {
+								document.getElementById(user.fid).innerText = response4.name;
+							}
+						}
+					);
+
+					span.appendChild(img);
+					span.appendChild(name);
+					li.appendChild(span);
+					lobby.appendChild(li);
+				}
 			});
-		}
+		});
 	});
 }
 
