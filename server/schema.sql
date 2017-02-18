@@ -6,13 +6,13 @@ DROP TABLE IF EXISTS users;
 
 CREATE TABLE users(
     id integer primary key autoincrement,
-    fbtoken text not null,
+    fid big int,
     lid integer
 );
 
-INSERT INTO users(fbtoken, lid) VALUES('faketoken', 1); 
-INSERT INTO users(fbtoken, lid) VALUES('faketoken2', 1); 
-INSERT INTO users(fbtoken, lid) VALUES('faketoken3', 2); 
+INSERT INTO users(fid, lid) VALUES(100005190632219, 1); 
+INSERT INTO users(fid, lid) VALUES(100006175597255, 1); 
+INSERT INTO users(fid, lid) VALUES(100001906565844, 2); 
 
 /*******************************************************************************
  * Lobbies 
@@ -26,7 +26,7 @@ CREATE TABLE lobbies(
     description text not null,
     lat real not null,
     lon real not null,
-    
+
     maximum integer not null,
     current integer not null
 );
