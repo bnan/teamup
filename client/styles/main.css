@@ -16,12 +16,8 @@ html, body {
     height: 60vh;
 }
 
-.mdl-layout__content{
-    background-image : url("Untitled.png");
-}
-
 .mdl-button{
-   text-align: center;
+    text-align: center;
 }
 
 #map {
@@ -33,6 +29,10 @@ html, body {
     text-align:center;
 }
 
+#show-dialog{
+    display: none;
+}
+
 #button_login{
     display :block;
     position : absolute;
@@ -40,6 +40,3 @@ html, body {
     left: 40%;
 }
 
-#show-dialog{
-    display: none;
-}
