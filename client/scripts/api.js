@@ -79,7 +79,7 @@ function fillOtherLobby(lat, lon){
 				li.appendChild(span);
 				lobby.appendChild(li);
 			}
-		}
+		});
 	});
 }
 
