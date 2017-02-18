@@ -10,9 +10,10 @@ CREATE TABLE users(
     lid integer
 );
 
-INSERT INTO users(fid, lid) VALUES(100005190632219, 1); 
+INSERT INTO users(fid, lid) VALUES(680229605493388, 1); 
 INSERT INTO users(fid, lid) VALUES(1880378588844643, 1); 
-INSERT INTO users(fid, lid) VALUES(100001906565844, 2); 
+INSERT INTO users(fid, lid) VALUES(1336869316386608, 2); 
+INSERT INTO users(fid, lid) VALUES(1506856099354386, 2); 
 
 /*******************************************************************************
  * Lobbies 
