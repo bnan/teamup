@@ -1,18 +1,10 @@
-function mapDraw(){
-    var btn = document.getElementById('button_login');
-    var map = document.getElementById('map');
-    var fab = document.getElementById('show-dialog');
-    btn.style.display = 'none';
-    map.style.display = 'block';
-    fab.style.display = 'block';
+function getPosition() {
+    nav
+}
 
-    var position = {lat: -25.363, lng: 131.044};
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 4,
-        center: position,
-        disableDefaultUI: true
-    });
+function mapDraw() {
+    var mapElement = document.getElementById('map');
+    mapElement.style.display = 'block';
 
 	var options = {
 		enableHighAccuracy: false,
@@ -20,43 +12,29 @@ function mapDraw(){
 		maximumAge: 0
 	};
 
-	navigator.geolocation.getCurrentPosition(function(position){
-		var url = '/api/getNearbyLobbies?radius=2&lat='+position.coords.latitude+'&lon='+position.coords.longitude;
-		axios.get(url).then(function(response){
-			for(const lobby of response.data.lobbies){
+	navigator.geolocation.getCurrentPosition(function(position) {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 6,
+            center: { lat: position.coords.latitude, lng: position.coords.longitude },
+            disableDefaultUI: true
+        });
+        
+		var url = '/api/getNearbyLobbies?radius=1.5&lat='+position.coords.latitude+'&lon='+position.coords.longitude;
+		axios.get(url).then(function(response) {
+			for(const lobby of response.data.lobbies) {
+                console.log(lobby);
 				var marker = new google.maps.Marker({
-					position: {lat: lobby.lat, lng: lobby.lon},
+					position: { lat: lobby.lat, lng: lobby.lon },
 					map: map,
 					title: lobby.description
 				});
 
     			marker.addListener('click', function() {
-        			var dialog = document.createElement('dialog');
-        			dialog.showModal();
+                    alert('adoro pila');
+        			/*var dialog = document.createElement('dialog');
+        			dialog.showModal();*/
     			});
 			}
 		});
-	});
-    
+	}, function() {}, options);
 }
-
-function initMap() {
-    window.fbAsyncInit = function() {
-        FB.init({
-            appId      : '741282629382475',
-            cookie     : true,  // enable cookies to allow the server to access 
-            // the session
-            xfbml      : true,  // parse social plugins on this page
-            version    : 'v2.8' // use graph api version 2.8
-        });
-
-        FB.getLoginStatus(function(response) {
-            statusChangeCallback(response);
-        });
-
-    };
-   
-}
-
-
-

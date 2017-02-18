@@ -11,93 +11,98 @@
     </head>
 
     <body>
-        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
             <header class="mdl-layout__header">
                 <div class="mdl-layout__header-row">
                     <span class="mdl-layout-title">Team Up</span>
-                    <div class="mdl-layout-spacer"></div>
-                    <nav class="mdl-navigation mdl-layout--large-screen-only">
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
-                        <a class="mdl-navigation__link" href="">Link</a>
-                    </nav>
+                </div>
+                <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+                    <a href="#tab-map" class="mdl-layout__tab is-active disabled">Map</a>
+                    <a href="#tab-lobby" class="mdl-layout__tab disabled">Lobby</a>
+                    <a href="#tab-account" class="mdl-layout__tab disabled">Account</a>
                 </div>
             </header>
 
             <div class="mdl-layout__drawer">
                 <span class="mdl-layout-title">Team Up</span>
                 <nav class="mdl-navigation">
-                    <a class="mdl-navigation__link" href="">My Account</a>
-                    <a class="mdl-navigation__link" href="">My Lobby</a>
-                    <a onclick="fb_logout()" class="mdl-navigation__link" href="">Log Out</a>
-                    <a onclick="notify_user('title','Message')" class="mdl-navigation__link" href="">Notification Test</a>
-
+                    <a onclick="fb_logout()" class="mdl-navigation__link">Log Out</a>
+                    <a onclick="notify_user('title','Message')" class="mdl-navigation__link">Notification Test</a>
                 </nav>
             </div>
 
             <main class="mdl-layout__content">
-                <div class="page-content">
+                <section id="tab-map" class="mdl-layout__tab-panel is-active">
+                    <div class="page-content">
+                        <button id="button_login" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="fb_login()">Login</button>
 
-                    <button id="button_login" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="fb_login()">
-                        Login
-                    </button>
+                        <div id="map"></div>
 
-                    <div id="map"></div>
+                        <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--bottom-right mdl-js-ripple-effect mdl-button--colored" id="create-lobby-btn" type="button"><i class="material-icons">add</i></button>
 
-                    <button class="mdl-button mdl-js-button mdl-button--fab mdl-button--bottom-right mdl-js-ripple-effect mdl-button--colored" id="show-dialog" type="button">
-                        <i class="material-icons">add</i>
-                    </button>
+                        <dialog id="create-lobby" class="mdl-dialog">
+                            <div class="mdl-dialog__content">
+                                <h3>Create Lobby</h3>
 
-                    <dialog class="mdl-dialog">
-                        <div class="mdl-dialog__content">
-                            <h3>Create Lobby</h3>
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="maxplay">
-                                <label class="mdl-textfield__label" for="maxplay">Max Players</label>
-                                <span class="mdl-textfield__error">Input is not a number!</span>
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" pattern="-?[0-9]*(\.[0-9]+)?" id="maxplay">
+                                    <label class="mdl-textfield__label" for="maxplay">Max Players</label>
+                                    <span class="mdl-textfield__error">Input is not a number</span>
+                                </div>
+
+                                <div id="options">
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="basket">
+                                        <input type="radio" id="basket" class="mdl-radio__button" name="option" value="1" checked>
+                                        <span class="mdl-radio__label">Basketball</span>
+                                    </label>
+
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="foot">
+                                        <input type="radio" id="foot" class="mdl-radio__button" name="option" value="2">
+                                        <span class="mdl-radio__label">Football</span>
+                                    </label>
+
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="volley">
+                                        <input type="radio" id="volley" class="mdl-radio__button" name="option" value="3" checked>
+                                        <span class="mdl-radio__label">Volleyball</span>
+                                    </label>
+
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="tennis">
+                                        <input type="radio" id="tennis" class="mdl-radio__button" name="option" value="4">
+                                        <span class="mdl-radio__label">Tenis</span>
+                                    </label>
+
+                                    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="other">
+                                        <input type="radio" id="other" class="mdl-radio__button" name="option" value="5" checked>
+                                        <span class="mdl-radio__label">Other</span>
+                                    </label>
+                                </div>
+
+                                <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                                    <input class="mdl-textfield__input" type="text" id="notes">
+                                    <label class="mdl-textfield__label" for="sample3">Description...</label>
+                                </div>
+
+                                <div class="mdl-dialog__actions">
+                                    <button type="button" class="close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Cancel</button>
+
+                                    <button type="submit" onclick="store()" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Create</button>
+                                </div>
                             </div>
-
-                            <div id="options">
-                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="basket">
-                                    <input type="radio" id="basket" class="mdl-radio__button" name="option" value="1" checked>
-                                    <span class="mdl-radio__label">Basketball</span>
-                                </label>
-
-                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="foot">
-                                    <input type="radio" id="foot" class="mdl-radio__button" name="option" value="2">
-                                    <span class="mdl-radio__label">Football</span>
-                                </label>
-
-                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="volley">
-                                    <input type="radio" id="volley" class="mdl-radio__button" name="option" value="3" checked>
-                                    <span class="mdl-radio__label">Volleyball</span>
-                                </label>
-
-                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="tennis">
-                                    <input type="radio" id="tennis" class="mdl-radio__button" name="option" value="4">
-                                    <span class="mdl-radio__label">Tenis</span>
-                                </label>
-
-                                <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="other">
-                                    <input type="radio" id="other" class="mdl-radio__button" name="option" value="5" checked>
-                                    <span class="mdl-radio__label">Other</span>
-                                </label>
-                            </div>
-
-                            <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-                                <input class="mdl-textfield__input" type="text" id="notes">
-                                <label class="mdl-textfield__label" for="sample3">Description...</label>
-                            </div>
-
-                            <div class="mdl-dialog__actions">
-                                <button type="button" class="mdl-button close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Cancel</button>
-
-                                <button onclick="store()" type="submit" class="mdl-button mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">Create</button>
-                            </div>
-                        </div>
-                    </dialog>
-                </div>
+                        </dialog>
+                    </div>
+                </section>
+                
+                <section id="tab-lobby" class="mdl-layout__tab-panel">
+                    <div class="page-content">
+                        LOBBY XDDDDDDDDDDDDDDDDDDDDDDD
+                    </div>
+                </section>
+                
+                <section id="tab-account" class="mdl-layout__tab-panel">
+                    <div class="page-content">
+                        ACCOUNT XDDDDDDDDDDDDDDDDDDDD
+                    </div>
+                </section>
             </main>
         </div>
 
@@ -111,13 +116,14 @@
             fjs.parentNode.insertBefore(js, fjs);
         }(document, 'script', 'facebook-jssdk'));
         </script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://code.getmdl.io/1.3.0/material.min.js" defer></script>
         <script src="scripts/dom.js"></script>
         <script src="scripts/dialog.js"></script>
         <script src="scripts/map.js"></script>
         <script src="scripts/facebook.js"></script>
         <script src="scripts/api.js"></script>
-        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvgV98SUK1th09t6MvtLm4IcCmE9k1fx0&callback=initMap" async defer></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCvgV98SUK1th09t6MvtLm4IcCmE9k1fx0&callback=mapDraw" async defer></script>
         <script src="https://unpkg.com/push.js@0.0.12"></script>
         <script src="scripts/notifications.js"></script>
     </body>

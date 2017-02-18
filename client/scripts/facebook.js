@@ -1,8 +1,24 @@
+function fb_init() {
+    window.fbAsyncInit = function() {
+        FB.init({
+            appId      : '741282629382475',
+            cookie     : true,  // enable cookies to allow the server to access 
+            // the session
+            xfbml      : true,  // parse social plugins on this page
+            version    : 'v2.8' // use graph api version 2.8
+        });
+
+        FB.getLoginStatus(function(response) {
+            statusChangeCallback(response);
+        });
+    };
+}
+
 function fb_login(){
     console.log("Init by the button");
     FB.login(function(response){
         statusChangeCallback(response);
-        initMap();
+        //initMap();
     });
 }
 
