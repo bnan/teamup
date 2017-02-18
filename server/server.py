@@ -195,12 +195,15 @@ def api_get_users():
 def api_post_user():
     try:
         req = request.get_json(force=True)
-
         db = db_open()
-        db.execute('INSERT INTO users(fid, lid) VALUES(?, ?)', [req['fid'], req['lid']])
-        db.commit()
-
-        res = { 'success': True }
+        cur = db.execute('SELECT * FROM users WHERE fid=?', [req['fid']])
+        result = cur.fetchall()
+        if len(result) == 0:
+            db.execute('INSERT INTO users(fid, lid) VALUES(?, ?)', [req['fid'], req['lid']])
+            db.commit()
+            res = { 'success': True }
+        else:
+            res = { 'success': False }
     except:
         res = { 'success': False }
 
