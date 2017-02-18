@@ -22,3 +22,18 @@ html, body {
     width: 100%;
     text-align:center;
 }
+
+#button_login{
+    display :block;
+    position : absolute;
+    top: 47%;
+    left: 40%;
+}
+
+#show-dialog{
+    display: none;
+}
+
+.mdl-layout__content{
+    background-image : url("Untitled.png");
+}

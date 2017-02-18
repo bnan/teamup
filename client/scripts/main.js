@@ -1,43 +1,61 @@
+// Handling States
+function logged_out(){
+    var btn = document.getElementById('button_login');
+    var map = document.getElementById('map');
+    var fab = document.getElementById('show-dialog');
+    var ofuscator = document.querySelector('.mdl-layout__obfuscator');
+    var drawer = document.querySelector('.mdl-layout__drawer');
+
+    ofuscator.classList.remove("is-visible");
+    drawer.classList.remove("is-visible");
+
+    btn.style.display = 'block';
+    map.style.display = 'none';
+    fab.style.display = 'none';
+}
+
+function draw_map(){
+    var btn = document.getElementById('button_login');
+    var map = document.getElementById('map');
+    var fab = document.getElementById('show-dialog');
+
+    btn.style.display = 'none';
+    map.style.display = 'block';
+    fab.style.display = 'block';
+
+    var position = {lat: -25.363, lng: 131.044};
+
+    var map = new google.maps.Map(document.getElementById('map'), {
+        zoom: 4,
+        center: position,
+        disableDefaultUI: true
+    });
+
+    var marker = new google.maps.Marker({
+        position: position,
+        map: map
+    });
+
+}
+
 // FaceBook Login
-// This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {
     console.log('statusChangeCallback');
     console.log(response);
     var btn =document.getElementById('button_login');
+
     if (response.status === 'connected') {
-        console.log('conectado');
-        // Logged into your app and Facebook.
-        btn.style.display = 'none';
-        testAPI();
-        console.log("Loading Map");
-        var position = {lat: -25.363, lng: 131.044};
-
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 4,
-            center: position,
-            disableDefaultUI: true
-        });
-
-        var marker = new google.maps.Marker({
-            position: position,
-            map: map
-        });
-
+        console.log('Connected');
+        draw_map();
     } else if (response.status === 'not_authorized') {
-        console.log('Continuar');
-        // The person is logged into Facebook, but not your app.
-        btn.style.display = 'block';
+        console.log('Must Log On App');
+        logged_out();
     } else {
-        // The person is not logged into Facebook, so we're not sure if
-        // they are logged into this app or not.
-        console.log('Iniciar Sessão');
-        btn.style.display = 'block';
+        console.log('Must Log On in Facebook');
+        logged_out();
     }
 }
 
-// This function is called when someone finishes with the Login
-// Button.  See the onlogin handler attached to it in the sample
-// code below.
 function checkLoginState() {
     console.log('Checking Login State');
     FB.getLoginStatus(function(response) {
@@ -45,10 +63,6 @@ function checkLoginState() {
     });
 }
 
-
-
-// Here we run a very simple test of the Graph API after login is
-// successful.  See statusChangeCallback() for when this call is made.
 function testAPI() {
     console.log('Welcome!  Fetching your information.... ');
     FB.api('/me', function(response) {
@@ -61,6 +75,7 @@ function testAPI() {
 }
 
 // ============ MAP =====================
+
 function initMap() {
     window.fbAsyncInit = function() {
         FB.init({
@@ -90,15 +105,18 @@ dialog.querySelector('.close').addEventListener('click', function() {
 });
 
 function fb_login(){
-    FB.login(function(response){
-        // Handle the response object, like in statusChangeCallback() in our demo code.
-        statusChangeCallback(response);
-        initMap();
-    });
+    console.log("Init by the button")
+        FB.login(function(response){
+            statusChangeCallback(response);
+            initMap();
+        });
 }
 
 function fb_logout(){
-    console.log("Disconnect")
-    FB.logout(function(response) {
-    });
+    event.preventDefault()
+        FB.logout(function(response) {
+        });
+    logged_out();
 }
+
+
