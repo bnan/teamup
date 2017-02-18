@@ -50,13 +50,12 @@ function fillSelfLobby() {
                     
                     var messenger = document.createElement("a");
                     messenger.setAttribute("href","https://m.me/"+user.fid);
-                var messenger_img = document.createElement("img");
-                  messenger_img.setAttribute("src","https://cdn0.iconfinder.com/data/icons/social-media-2092/100/social-33-128.png");
                     
+                    var messenger_img = document.createElement("img");
+                    messenger_img.setAttribute("src","https://cdn0.iconfinder.com/data/icons/social-media-2092/100/social-33-128.png");
                     messenger_img.setAttribute("style","width:35%;position:relative;")
                  
-
-					FB.api(
+                    FB.api(
 						"/"+user.fid,
 						function (response4) {
 							if (response4 && !response4.error) {
@@ -98,6 +97,14 @@ function fillOtherLobby(lat, lon){
 
 				var name = document.createElement("span");
 				name.setAttribute("id", user.fid);
+                
+                var messenger = document.createElement("a");
+                    messenger.setAttribute("href","https://m.me/"+user.fid);
+                    
+                var messenger_img = document.createElement("img");
+                messenger_img.setAttribute("src","https://cdn0.iconfinder.com/data/icons/social-media-2092/100/social-33-128.png");
+                messenger_img.setAttribute("style","width:35%;position:relative;")
+                 
 				FB.api(
 					"/"+user.fid,
 					function (response3) {
@@ -108,6 +115,8 @@ function fillOtherLobby(lat, lon){
 				);
 				span.appendChild(img);
 				span.appendChild(name);
+                messenger.appendChild(messenger_img);
+                span.appendChild(messenger);
 				li.appendChild(span);
 				lobby.appendChild(li);
 			}
