@@ -18,3 +18,5 @@ function registerDialogAndButton(dialog, button) {
 }
 
 registerDialogAndButton('#create-lobby', '#create-lobby-btn');
+
+registerDialogAndButton('#join-lobby', null);

@@ -1,3 +1,4 @@
+
 function getPosition() {
     nav
 }
@@ -30,9 +31,8 @@ function mapDraw() {
 				});
 
     			marker.addListener('click', function() {
-                    alert('adoro pila');
-        			/*var dialog = document.createElement('dialog');
-        			dialog.showModal();*/
+        			var dialog = document.getElementById('join-lobby');
+        			dialog.showModal();
     			});
 			}
 		});
