@@ -10,10 +10,9 @@ CREATE TABLE users(
     lid integer
 );
 
-INSERT INTO users(fbtoken, lid) VALUES(
-    'faketoken', 
-    null 
-);
+INSERT INTO users(fbtoken, lid) VALUES('faketoken', 1); 
+INSERT INTO users(fbtoken, lid) VALUES('faketoken2', 1); 
+INSERT INTO users(fbtoken, lid) VALUES('faketoken3', 2); 
 
 /*******************************************************************************
  * Lobbies 
@@ -28,16 +27,25 @@ CREATE TABLE lobbies(
     lat real not null,
     lon real not null,
     
-    lot integer not null,
+    maximum integer not null,
     current integer not null
 );
 
-INSERT INTO lobbies(sport, description, lat, lon, lot, current) VALUES(
+INSERT INTO lobbies(sport, description, lat, lon, maximum, current) VALUES(
     'Soccer',
     'Bring a ball',
-    40.2050591,
+    41.205091,
     -8.4055564,
     5,
-    1
+    2 
+);
+
+INSERT INTO lobbies(sport, description, lat, lon, maximum, current) VALUES(
+    'Tennis',
+    'I fucking hate tennis',
+    40.2050591,
+    -7.405564,
+    2,
+    1 
 );
 

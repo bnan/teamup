@@ -6,12 +6,12 @@ from flask import Flask, request, send_from_directory, jsonify, session, g, redi
 app = Flask(__name__, static_url_path='')
 
 app.config.update(
-        DATABASE=os.path.join(app.root_path, 'teamup.db'),
-        DEBUG=False,
-        SECRET_KEY='development key',
-        USERNAME='admin',
-        PASSWORD='default'
-        )
+    DATABASE=os.path.join(app.root_path, 'teamup.db'),
+    DEBUG=False,
+    SECRET_KEY='development key',
+    USERNAME='admin',
+    PASSWORD='default'
+)
 
 ################################################################################
 # Database
@@ -62,8 +62,8 @@ def close_db(error):
 # API
 ################################################################################
 
-@app.route('/api/lobbies', methods=['GET'])
-def api_lobbies_get():
+@app.route('/api/getLobbies', methods=['GET'])
+def api_get_lobbies():
     db = db_open()
 
     lat = float(request.args.get('lat')) if request.args.get('lat') else None
@@ -83,25 +83,87 @@ def api_lobbies_get():
     res = { 'lobbies': lobbies }
     return jsonify(**res)
 
-@app.route('/api/userLobby', methods=['GET'])
-def api_userLobby_get():
-	db = db_open()
-	userID = request.args.get('fbtoken')
-	cur = db.execute('SELECT * FROM users WHERE fbtoken = ?', [userID])
-	user = cur.fetchall()
-	cur = db.execute('SELECT * FROM lobbies WHERE id = ?', [user.lid])
-	lobby = cur.fetchall()
-	res = { 'lobby': lobby }
-	return jsonify(**res)
+@app.route('/api/postLobby', methods=['POST'])
+def api_post_lobby():
+    req = request.get_json(force=True)
+    db = db_open()
 
-@app.route('/api/lobbyUsers', methods=['GET'])
-def	api_lobbyUsers_get():
-	db = db_open()
-	lobbyID = request.args.get('lid')
-	cur = db.execute('SELECT * FROM users WHERE lid = ?', [lobbyID])
-	users = cur.fetchall()
-	res = { 'users': users }
-	return jsonify(**res)
+    db.execute('INSERT INTO lobbies(sport, description, lat, lon, maximum, current) VALUES(?, ?, ?, ?, ?, ?)', [req['sport'], req['description'], req['lat'], req['lon'], req['maximum'], req['current']])
+    db.commit()
+
+    res = { 'success': 'true' }
+    return jsonify(**res)
+
+@app.route('/api/getLobbyByUser', methods=['GET'])
+def api_get_lobby_by_user():
+    db = db_open()
+    uid = request.args.get('fbtoken')
+
+    cur = db.execute('SELECT * FROM users WHERE fbtoken = ?', [uid])
+    user = cur.fetchall()[0]
+
+    cur = db.execute('SELECT * FROM lobbies WHERE id = ?', [user['lid']])
+    lobby = cur.fetchall()
+
+    res = { 'lobby': lobby }
+    return jsonify(**res)
+
+@app.route('/api/leaveLobby', methods=['PUT'])
+def api_leave_lobby():
+    db = db_open()
+    req = request.get_json(force=True)
+    
+    cur = db.execute('SELECT * FROM lobbies WHERE lat=? AND lon=?', [req['lat'], req['lon']])
+    result = cur.fetchall()
+    if len(result) == 0:
+        res = { 'success': 'false' }
+        return jsonify(**res)
+    current = result[0]['current']
+
+    if current == 1:
+        db.execute('DELETE FROM lobbies WHERE lat=? AND lon=?', [req['lat'], req['lon']])
+        db.commit()
+    else:
+        db.execute('UPDATE lobbies SET current=current-1 WHERE lat=? AND lon=?', [req['lat'], req['lon']])
+        db.commit()
+
+    db.execute('UPDATE users SET lid=null WHERE fbtoken=?', [req['fbtoken']])
+    db.commit()
+
+    res = { 'success': 'true' }
+    return jsonify(**res)
+    
+@app.route('/api/getUsers', methods=['GET'])
+def api_get_users():
+    db = db_open()
+    
+    cur = db.execute('SELECT * FROM users')
+    users = cur.fetchall()
+
+    res = { 'users': users }
+    return jsonify(**res)
+
+@app.route('/api/postUser', methods=['POST'])
+def api_post_user():
+    req = request.get_json(force=True)
+    db = db_open()
+
+    db.execute('INSERT INTO users(fbtoken, lid) VALUES(?, ?)', [req['fbtoken'], req['lid']])
+    db.commit()
+
+    res = { 'success': 'true' }
+    return jsonify(**res)
+
+@app.route('/api/getUsersByLobby', methods=['GET'])
+def api_get_users_by_lobby():
+    db = db_open()
+    lid = request.args.get('lid')
+
+    cur = db.execute('SELECT * FROM users WHERE lid = ?', [lid])
+    users = cur.fetchall()
+
+    res = { 'users': users }
+    return jsonify(**res)
 
 ################################################################################
 # Client
