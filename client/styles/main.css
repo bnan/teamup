@@ -1,3 +1,9 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
 .mdl-button--bottom-right {
     bottom: 45px;
     padding-top: 24px;
@@ -6,18 +12,22 @@
     z-index: 998;
 }
 
+.mdl-dialog__content{
+    height: 60vh;
+}
+
+.mdl-layout__content{
+    background-image : url("Untitled.png");
+}
+
+.mdl-button{
+   text-align: center;
+}
+
 #map {
     height: 100vh;
 }
 
-html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-.mdl-dialog__content{
-    height: 60vh;
-}
 #maxlot{
     width: 100%;
     text-align:center;
@@ -32,8 +42,4 @@ html, body {
 
 #show-dialog{
     display: none;
-}
-
-.mdl-layout__content{
-    background-image : url("Untitled.png");
 }
