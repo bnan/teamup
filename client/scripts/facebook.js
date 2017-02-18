@@ -18,6 +18,10 @@ function fb_login(){
     console.log("Init by the button");
     FB.login(function(response){
         statusChangeCallback(response);
+		axios.put('/api/joinLobby', {
+			"lid": null,
+			"fid": response.authResponse.userID
+		});
     });
 }
 
