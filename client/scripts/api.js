@@ -12,6 +12,21 @@ function getLobbyByUser(fid, cb) {
 	});
 }
 
+function joinLobby() {
+    var dialog = document.getElementById('join-lobby');
+	var url = '/api/getLobby?lat=' + dialog.lat + '&lon=' + dialog.lon;
+	axios.get(url).then(function(response) {
+		FB.getLoginStatus(function(response1) {
+			axios.put('/api/joinLobby', {
+				"lat": dialog.lat,
+				"lon": dialog.lon,
+				"lid": response.data.lobby[0].id,
+				"fid": response1.authResponse.userID
+			});
+		});
+	});			
+}
+
 function fillSelfLobby() {
 	FB.getLoginStatus(function(response1) {
 		getLobbyByUser(response1.authResponse.userID, function(response2) {

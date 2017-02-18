@@ -22,6 +22,8 @@ function mapDraw() {
 				});
     			marker.addListener('click', function() {
         			var dialog = document.getElementById('join-lobby');
+					dialog.lat = lobby.lat;
+					dialog.lon = lobby.lon;
 					fillOtherLobby(lobby.lat, lobby.lon);
         			dialog.showModal();
     			});
