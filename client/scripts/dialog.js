@@ -1,11 +1,20 @@
-var dialog = document.querySelector('dialog');
-var showDialogButton = document.querySelector('#show-dialog');
+function registerDialogAndButton(dialog, button) {
+    dialog = document.querySelector(dialog);
+    button = document.querySelectorAll(button);
 
-showDialogButton.addEventListener('click', function() {
-    dialog.showModal();
-});
+    button.forEach(function(button) {
+        button.addEventListener('click', function() {
+            dialog.showModal();
+        });
+    });
 
-dialog.querySelector('.close').addEventListener('click', function() {
-    dialog.close();
-});
+    dialog.querySelector('.close').addEventListener('click', function() {
+        dialog.close();
+    });
 
+    dialog.querySelector('.submit').addEventListener('click', function() {
+        dialog.close();
+    });
+}
+
+registerDialogAndButton('#create-lobby', '#create-lobby-btn');

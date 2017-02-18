@@ -1,8 +1,8 @@
+
 function mapDraw(){
     var btn = document.getElementById('button_login');
     var map = document.getElementById('map');
     var fab = document.getElementById('show-dialog');
-
     btn.style.display = 'none';
     map.style.display = 'block';
     fab.style.display = 'block';
@@ -18,6 +18,11 @@ function mapDraw(){
     var marker = new google.maps.Marker({
         position: position,
         map: map
+    });
+    
+    marker.addListener('click', function() {
+        var dialog = document.createElement('dialog');
+        dialog.showModal();
     });
 }
 
@@ -36,5 +41,8 @@ function initMap() {
         });
 
     };
+   
 }
+
+
 
