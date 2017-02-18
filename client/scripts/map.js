@@ -1,4 +1,3 @@
-
 function mapDraw(){
     var btn = document.getElementById('button_login');
     var map = document.getElementById('map');
@@ -15,15 +14,30 @@ function mapDraw(){
         disableDefaultUI: true
     });
 
-    var marker = new google.maps.Marker({
-        position: position,
-        map: map
-    });
+	var options = {
+		enableHighAccuracy: false,
+		timeout: 5000,
+		maximumAge: 0
+	};
+
+	navigator.geolocation.getCurrentPosition(function(position){
+		var url = '/api/getNearbyLobbies?radius=2&lat='+position.coords.latitude+'&lon='+position.coords.longitude;
+		axios.get(url).then(function(response){
+			for(const lobby of response.data.lobbies){
+				var marker = new google.maps.Marker({
+					position: {lat: lobby.lat, lng: lobby.lon},
+					map: map,
+					title: lobby.description
+				});
+
+    			marker.addListener('click', function() {
+        			var dialog = document.createElement('dialog');
+        			dialog.showModal();
+    			});
+			}
+		});
+	});
     
-    marker.addListener('click', function() {
-        var dialog = document.createElement('dialog');
-        dialog.showModal();
-    });
 }
 
 function initMap() {
