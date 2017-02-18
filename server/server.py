@@ -97,9 +97,9 @@ def api_post_lobby():
 @app.route('/api/getLobbyByUser', methods=['GET'])
 def api_get_lobby_by_user():
     db = db_open()
-    uid = request.args.get('fbtoken')
+    uid = request.args.get('fid')
 
-    cur = db.execute('SELECT * FROM users WHERE fbtoken = ?', [uid])
+    cur = db.execute('SELECT * FROM users WHERE fid= ?', [uid])
     user = cur.fetchall()[0]
 
     cur = db.execute('SELECT * FROM lobbies WHERE id = ?', [user['lid']])
@@ -127,7 +127,7 @@ def api_leave_lobby():
         db.execute('UPDATE lobbies SET current=current-1 WHERE lat=? AND lon=?', [req['lat'], req['lon']])
         db.commit()
 
-    db.execute('UPDATE users SET lid=null WHERE fbtoken=?', [req['fbtoken']])
+    db.execute('UPDATE users SET lid=null WHERE fid=?', [req['fid']])
     db.commit()
 
     res = { 'success': 'true' }
@@ -148,7 +148,7 @@ def api_post_user():
     req = request.get_json(force=True)
     db = db_open()
 
-    db.execute('INSERT INTO users(fbtoken, lid) VALUES(?, ?)', [req['fbtoken'], req['lid']])
+    db.execute('INSERT INTO users(fid, lid) VALUES(?, ?)', [req['fid'], req['lid']])
     db.commit()
 
     res = { 'success': 'true' }
