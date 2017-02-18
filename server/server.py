@@ -81,7 +81,7 @@ def api_get_nearby_lobbies():
     except:
         lobbies = []
         res = { 'success': False, 'lobbies': lobbies }
-         
+
     return jsonify(**res)
 
 @app.route('/api/getLobby', methods=['GET'])
@@ -135,7 +135,7 @@ def api_join_lobby():
 @app.route('/api/leaveLobby', methods=['PUT'])
 def api_leave_lobby():
     req = request.get_json(force=True)
-    
+
     db = db_open()
     cur = db.execute('SELECT * FROM lobbies WHERE lat=? AND lon=?', [req['lat'], req['lon']])
     result = cur.fetchall()
@@ -180,11 +180,15 @@ def api_get_lobby_by_user():
 
 @app.route('/api/getUsers', methods=['GET'])
 def api_get_users():
-    db = db_open()
-    cur = db.execute('SELECT * FROM users')
-    users = cur.fetchall()
+    try:
+        db = db_open()
+        cur = db.execute('SELECT * FROM users')
+        users = cur.fetchall()
+        res = { 'success': True, 'users': users }
+    except:
+        users = {}
+        res = { 'success': False, 'users': users }
 
-    res = { 'users': users }
     return jsonify(**res)
 
 @app.route('/api/postUser', methods=['POST'])
@@ -225,10 +229,6 @@ def api_get_users_by_lobby():
 @app.route('/')
 def client_index():
     return open('../client/index.html').read()
-
-@app.route('/lobby')
-def client_lobby():
-    return open('../client/lobby.html').read()
 
 @app.route('/scripts/<path:path>')
 def client_scripts(path):
