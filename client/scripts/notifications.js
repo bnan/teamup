@@ -1,5 +1,5 @@
 function notify_user(title, body){
-    event.preventDefault()
+    event.preventDefault();
     Push.create(title, {
         body: body,
         link: "link",
