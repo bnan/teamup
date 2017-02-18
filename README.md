@@ -1,5 +1,5 @@
 # Teamup 
-
+ 
 Developed at Shift Appens, a 48h hackathon set in Coimbra, Teamup is an app that helps you find people to play sports with. 
 
 ## Technologies
