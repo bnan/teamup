@@ -17,7 +17,9 @@ function fillSelfLobby() {
 		getLobbyByUser(response1.authResponse.userID, function(response2) {
 			getUsersByLobby(response2.data.lobby[0].id, function(response3) {
 				var lobby = document.getElementById("selflobby");
-
+				while (lobby.firstChild) {
+    				lobby.removeChild(lobby.firstChild);
+				}
 				for(const user of response3.data.users) {
 					var li = document.createElement("li");
 					li.setAttribute("class", "mdl-list__item mdl-list__item--threeline");
@@ -54,6 +56,9 @@ function fillOtherLobby(lat, lon){
 		getUsersByLobby(response.data.lobby[0].id, function(response2) {
 				
 			var lobby = document.getElementById("otherlobby");
+			while (lobby.firstChild) {
+				lobby.removeChild(lobby.firstChild);
+			}
 			for(const user of response2.data.users) {
 				var li = document.createElement("li");
 				li.setAttribute("class", "mdl-list__item mdl-list__item--threeline");
