@@ -57,34 +57,36 @@ function fillSelfLobby() {
 	FB.getLoginStatus(function(response1) {
 		getLobbyByUser(response1.authResponse.userID, function(response2) {
 			getUsersByLobby(response2.data.lobby[0].id, function(response3) {
-	            var lobby = document.getElementById("selflobby");
-				while (lobby.firstChild) {
-    				lobby.removeChild(lobby.firstChild);
+	            var ul = document.getElementById("selflobby");
+				while (ul.firstChild) {
+    				ul.removeChild(ul.firstChild);
 				}
 				for(const user of response3.data.users) {
 					var li = document.createElement("li");
-					li.setAttribute("class", "mdl-list__item mdl-list__item--threeline");
+					li.setAttribute("class", "mdl-list__item");
 
-					var span = document.createElement("span");
-					span.setAttribute("class", "mdl-list__item-primary-content");
+					var primary = document.createElement("span");
+					primary.setAttribute("class", "mdl-list__item-primary-content");
 
-					var img = document.createElement("img");
-					img.setAttribute("src", "http://graph.facebook.com/" + user.fid + "/picture?type=square");
-                    img.setAttribute("style","margin-right:3.5%;")
+                        var primaryAvatar = document.createElement("img");
+                        primaryAvatar.setAttribute("src", "http://graph.facebook.com/" + user.fid + "/picture?type=square");
+                        primaryAvatar.classList.add('mdl-list__item-avatar');
 
-					var name = document.createElement("span");
-					name.setAttribute("id", user.fid);
+                        var primaryName = document.createElement("span");
+                        primaryName.setAttribute("id", user.fid);
+                    
+                    var secondary = document.createElement('span');
+                    secondary.classList.add('mdl-list__item-secondary-content');
 
-                    name.setAttribute("style", "width:80%;");
-
-                    var messenger = document.createElement("a");
-                    messenger.setAttribute("href","https://m.me/"+user.fid);
-
-                    var messenger_img = document.createElement("img");
-                    messenger_img.setAttribute("src","https://cdn0.iconfinder.com/data/icons/social-media-2092/100/social-33-128.png");
-
-                    messenger_img.setAttribute("style","width:40px;height:40px;position:relative;");
-
+                        var secondaryMessage = document.createElement("a");
+                        secondaryMessage.setAttribute("href","https://m.me/"+user.fid);
+                        secondaryMessage.classList.add('mdl-list__item-secondary-action');
+                        
+                            var secondaryMessageIcon = document.createElement('i');
+                            secondaryMessageIcon.classList.add('material-icons');
+                            secondaryMessageIcon.textContent = 'message';
+                            secondaryMessage.appendChild(secondaryMessageIcon);
+    
                     FB.api(
 						"/"+user.fid,
 						function (response4) {
@@ -94,21 +96,26 @@ function fillSelfLobby() {
 						}
 					);
 
-                    span.appendChild(img);
-					span.appendChild(name);
-                    messenger.appendChild(messenger_img);
-                    span.appendChild(messenger);
-                    li.appendChild(span);
-					lobby.appendChild(li);
+                    primary.appendChild(primaryAvatar);
+                    primary.appendChild(primaryName);
+                    secondary.appendChild(secondaryMessage);
+                    li.appendChild(primary);
+                    li.appendChild(secondary);
+					ul.appendChild(li);
 				}
+
+                var div = document.createElement('div');
+                div.classList.add('center');
+                /*
                 var size = document.createElement("h3");
                 size.innerText = response2.data.lobby[0].current + '/' + response2.data.lobby[0].maximum;
+                */
                 var button_leave = document.createElement("button");
                 button_leave.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised mdl-button--colored");
                 button_leave.setAttribute("onClick", "leaveLobby()")
-                button_leave.innerText = "Leave";
-                lobby.appendChild(size);
-                lobby.appendChild(button_leave);
+                button_leave.innerText = "Leave Lobby";
+                div.appendChild(button_leave);
+                ul.appendChild(div);
 			});
 		});
 	});

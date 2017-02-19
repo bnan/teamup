@@ -6,7 +6,7 @@
         <title>Team Up</title>
 
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.teal-pink.min.css">
+        <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.blue-pink.min.css">
         <link rel="stylesheet" href="styles/main.css">
     </head>
 
@@ -26,7 +26,6 @@
                 <span class="mdl-layout-title">Team Up</span>
                 <nav class="mdl-navigation">
                     <a onclick="fb_logout()" class="mdl-navigation__link">Log Out</a>
-                    <a onclick="notify_user('title','Message')" class="mdl-navigation__link">Notification Test</a>
                 </nav>
             </div>
 
@@ -110,11 +109,13 @@
                 </section>
 
                 <section id="tab-lobby" class="mdl-layout__tab-panel">
-                    <div id="info_lobby" class="page-content">
-                        Not Connected to Show Lobby! Must Login!
-                    </div>
+                    <div class="page-content">
+                        <div id="info_lobby">
+                            Not Connected to Show Lobby! Must Login!
+                        </div>
 
-                    <ul class="mdl-list" id="selflobby"></ul>
+                        <ul class="mdl-list" id="selflobby"></ul>
+                    </div>
                 </section>
             </main>
         </div>
