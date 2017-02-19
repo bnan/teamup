@@ -6,7 +6,11 @@ function logged_out() {
     var info_account = document.getElementById('info_account');
     var fab = document.getElementById('create-lobby-btn');
     var self_lobby = document.getElementById('selflobby');
+    var obfuscator = document.querySelector('.mdl-layout__obfuscator');
+    var drawer = document.querySelector('.mdl-layout__drawer');
 
+    obfuscator.classList.remove('is-visible');
+    drawer.classList.remove('is-visible');
     mapElement.style.display = 'none';
     btn.style.display = "block";
     info.style.display = "block";
