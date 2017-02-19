@@ -22,6 +22,8 @@ function mapDraw() {
 }
 
 function updateMarkers(response){
+		if(!window.localStorage.getItem("nlobbies")) window.localStorage.setItem("nlobbies",JSON.stringify([]));
+		var temp = JSON.parse(window.localStorage.getItem("nlobbies"));
         for(const lobby of response.data.lobbies) {
             var marker = new google.maps.Marker({
                 position: { lat: lobby.lat, lng: lobby.lon },
@@ -38,6 +40,15 @@ function updateMarkers(response){
                 dialog.lon = lobby.lon;
                 fillOtherLobby(lobby.lat, lobby.lon);
                 dialog.showModal();
-            });
+            });	
+			var b = true;
+			for(const l of temp) {
+				if(l.lat === lobby.lat && l.lon === lobby.lon) var b = false;
+			}
+			if(b){
+				var str = "There's a new " + lobby.sport + " lobby nearby!";
+ 				notify_user("Nearby lobby",str, "images/" + lobby.sport + ".png");
+			}
         }
+		window.localStorage.setItem("nlobbies", JSON.stringify(response.data.lobbies));
 }
