@@ -1,3 +1,13 @@
+window.setInterval(function(){
+    console.log("5 seconds");
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var url = '/api/getNearbyLobbies?radius=4&lat='+position.coords.latitude+'&lon='+position.coords.longitude;
+        axios.get(url).then(function(response) {
+            updateMarkers(response);
+        });
+    }, function() {}, options);
+}, 5000);
+
 function logged_out() {
     var btn = document.getElementById('button_login');
     var mapElement = document.getElementById('map');

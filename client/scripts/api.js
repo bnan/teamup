@@ -49,7 +49,6 @@ function postLobby(sport, description, lat, lon, maximum, current) {
             current: current,
             fid: response.authResponse.userID
         });
-        window.location.href="/";
     });
 }
 
@@ -74,19 +73,19 @@ function fillSelfLobby() {
 
                         var primaryName = document.createElement("span");
                         primaryName.setAttribute("id", user.fid);
-                    
+
                     var secondary = document.createElement('span');
                     secondary.classList.add('mdl-list__item-secondary-content');
 
                         var secondaryMessage = document.createElement("a");
                         secondaryMessage.setAttribute("href","https://m.me/"+user.fid);
                         secondaryMessage.classList.add('mdl-list__item-secondary-action');
-                        
+
                             var secondaryMessageIcon = document.createElement('i');
                             secondaryMessageIcon.classList.add('material-icons');
                             secondaryMessageIcon.textContent = 'message';
                             secondaryMessage.appendChild(secondaryMessageIcon);
-    
+
                     FB.api(
 						"/"+user.fid,
 						function (response4) {
