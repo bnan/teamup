@@ -109,6 +109,10 @@ def api_post_lobby():
         db = db_open()
         db.execute('INSERT INTO lobbies(sport, description, lat, lon, maximum, current) VALUES(?, ?, ?, ?, ?, ?)', [req['sport'], req['description'], req['lat'], req['lon'], req['maximum'], req['current']])
         db.commit()
+
+        cur = db.execute('SELECT * FROM lobbies WHERE lat=? AND lon=?', [req['lat'], req['lon']])
+        lid = cur.fetchall()[0]['id']
+        db.execute('UPDATE users SET lid=? WHERE fid=?', [lid, req['fid']])
         res = { 'success': True }
     except:
         res = { 'success': False }
@@ -157,11 +161,10 @@ def api_join_lobby():
 def api_leave_lobby():
     req = request.get_json(force=True)
 
-    db = db_open()
-    cur = db.execute('SELECT * FROM lobbies WHERE lat=? AND lon=?', [req['lat'], req['lon']])
-    result = cur.fetchall()
-
     try:
+        db = db_open()
+        cur = db.execute('SELECT * FROM lobbies WHERE lat=? AND lon=?', [req['lat'], req['lon']])
+        result = cur.fetchall()
         current = result[0]['current']
 
         if current == 1:

@@ -42,14 +42,17 @@ function leaveLobby() {
 }
 
 function postLobby(sport, description, lat, lon, maximum, current) {
-    var url = '/api/postLobby';
-    axios.post(url, {
-        sport: sport,
-        description: description,
-        lat: lat,
-        lon: lon,
-        maximum: maximum,
-        current: current
+    FB.getLoginStatus(function(response) {
+        var url = '/api/postLobby';
+        axios.post(url, {
+            sport: sport,
+            description: description,
+            lat: lat,
+            lon: lon,
+            maximum: maximum,
+            current: current,
+            fid: response.authResponse.userID
+        });
     });
 }
 
