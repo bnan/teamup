@@ -113,6 +113,7 @@ def api_post_lobby():
         cur = db.execute('SELECT * FROM lobbies WHERE lat=? AND lon=?', [req['lat'], req['lon']])
         lid = cur.fetchall()[0]['id']
         db.execute('UPDATE users SET lid=? WHERE fid=?', [lid, req['fid']])
+        db.commit()
         res = { 'success': True }
     except:
         res = { 'success': False }
@@ -132,11 +133,15 @@ def api_join_lobby():
             lid = result[0]['id']
             current = result[0]['current']
             maximum = result[0]['maximum']
-
+            
+            print('CHECKING', current, maximum)
             if current < maximum:
-                cur = db.execute('SELECT * FROM users WHERE fid=? AND lid=?', [lid, req['fid']])
+                cur = db.execute('SELECT * FROM users WHERE fid=? AND lid=?', [req['fid'], lid])
                 result = cur.fetchall()
+                print('PIKACHU', result)
                 if len(result) == 0:
+
+                    print('INCREMENTING')
                     db.execute('UPDATE lobbies SET current=current+1 WHERE lat=? AND lon=?', [req['lat'], req['lon']])
                     db.commit()
                     db.execute('UPDATE users SET lid=? WHERE fid=?', [lid, req['fid']])

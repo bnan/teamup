@@ -14,16 +14,12 @@ function getLobbyByUser(fid, cb) {
 
 function joinLobby() {
     var dialog = document.getElementById('join-lobby');
-	var url = '/api/getLobby?lat=' + dialog.lat + '&lon=' + dialog.lon;
-	axios.get(url).then(function(response) {
-		FB.getLoginStatus(function(response1) {
-			axios.put('/api/joinLobby', {
-				"lat": dialog.lat,
-				"lon": dialog.lon,
-				"lid": response.data.lobby[0].id,
-				"fid": response1.authResponse.userID
-			});
-		});
+    FB.getLoginStatus(function(response1) {
+        axios.put('/api/joinLobby', {
+            lat: dialog.lat,
+            lon: dialog.lon,
+            fid: response1.authResponse.userID
+        });
 	});
 }
 
@@ -32,13 +28,13 @@ function leaveLobby() {
 		getLobbyByUser(response.authResponse.userID, function(response2){
 			console.log(response);
 			axios.put('/api/leaveLobby', {
-				"lat": response2.data.lobby[0].lat,
-				"lon": response2.data.lobby[0].lon,
-				"lid": response.authResponse.userID
+				lat: response2.data.lobby[0].lat,
+				lon: response2.data.lobby[0].lon,
+				fid: response.authResponse.userID
 			});
 		});
+        window.location.href="/";
 	});
-	window.location.href="/";
 }
 
 function postLobby(sport, description, lat, lon, maximum, current) {
@@ -53,6 +49,7 @@ function postLobby(sport, description, lat, lon, maximum, current) {
             current: current,
             fid: response.authResponse.userID
         });
+        window.location.href="/";
     });
 }
 
@@ -87,7 +84,7 @@ function fillSelfLobby() {
                     messenger_img.setAttribute("src","https://cdn0.iconfinder.com/data/icons/social-media-2092/100/social-33-128.png");
 
                     messenger_img.setAttribute("style","width:40px;height:40px;position:relative;");
-                 
+
                     FB.api(
 						"/"+user.fid,
 						function (response4) {
@@ -96,10 +93,10 @@ function fillSelfLobby() {
 							}
 						}
 					);
-				    
+
                     span.appendChild(img);
 					span.appendChild(name);
-                    messenger.appendChild(messenger_img); 
+                    messenger.appendChild(messenger_img);
                     span.appendChild(messenger);
                     li.appendChild(span);
 					lobby.appendChild(li);
