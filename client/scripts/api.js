@@ -33,8 +33,9 @@ function leaveLobby() {
 				fid: response.authResponse.userID
 			});
 		});
-        window.location.href="/";
+        document.getElementById("tab-map").click();
 	});
+    fillSelfLobby();
 }
 
 function postLobby(sport, description, lat, lon, maximum, current) {
@@ -53,13 +54,13 @@ function postLobby(sport, description, lat, lon, maximum, current) {
 }
 
 function fillSelfLobby() {
+    var ul = document.getElementById("selflobby");
+    while (ul.firstChild) {
+        ul.removeChild(ul.firstChild);
+    }
 	FB.getLoginStatus(function(response1) {
 		getLobbyByUser(response1.authResponse.userID, function(response2) {
 			getUsersByLobby(response2.data.lobby[0].id, function(response3) {
-	            var ul = document.getElementById("selflobby");
-				while (ul.firstChild) {
-    				ul.removeChild(ul.firstChild);
-				}
 				for(const user of response3.data.users) {
 					var li = document.createElement("li");
 					li.setAttribute("class", "mdl-list__item");
