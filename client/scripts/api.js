@@ -30,13 +30,15 @@ function joinLobby() {
 function leaveLobby() {
 	FB.getLoginStatus(function(response) {
 		getLobbyByUser(response.authResponse.userID, function(response2){
+			console.log(response);
 			axios.put('/api/leaveLobby', {
-				"lat": response2.data.lat,
-				"lon": response2.data.lon,
+				"lat": response2.data.lobby[0].lat,
+				"lon": response2.data.lobby[0].lon,
 				"lid": response.authResponse.userID
 			});
 		});
 	});
+	window.location.href="/";
 }
 
 function fillSelfLobby() {
