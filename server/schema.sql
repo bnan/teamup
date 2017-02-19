@@ -13,7 +13,7 @@ CREATE TABLE users(
 INSERT INTO users(fid, lid) VALUES(680229605493388, 1); 
 INSERT INTO users(fid, lid) VALUES(1880378588844643, 1); 
 INSERT INTO users(fid, lid) VALUES(1336869316386608, 2); 
-INSERT INTO users(fid, lid) VALUES(1506856099354386, 2); 
+INSERT INTO users(fid, lid) VALUES(1506856099354386, 3); 
 
 /*******************************************************************************
  * Lobbies 
@@ -37,7 +37,7 @@ INSERT INTO lobbies(sport, description, lat, lon, maximum, current) VALUES(
     40.204158,
     -8.409342,
     5,
-    3 
+    2 
 );
 
 INSERT INTO lobbies(sport, description, lat, lon, maximum, current) VALUES(
@@ -46,7 +46,7 @@ INSERT INTO lobbies(sport, description, lat, lon, maximum, current) VALUES(
     40.201420,
     -8.407829,
     2,
-    1 
+    2 
 );
 
 INSERT INTO lobbies(sport, description, lat, lon, maximum, current) VALUES(

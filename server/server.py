@@ -121,13 +121,34 @@ def api_join_lobby():
         req = request.get_json(force=True)
 
         db = db_open()
-        db.execute('UPDATE lobbies SET current=current+1 WHERE lat=? AND lon=?', [req['lat'], req['lon']])
-        db.commit()
+        cur = db.execute('SELECT * FROM lobbies WHERE lat=? AND lon=?', [req['lat'], req['lon']])
+        result = cur.fetchall()
 
-        db.execute('UPDATE users SET lid=? WHERE fid=?', [req['lid'], req['fid']])
-        db.commit()
-        res = { 'success': True }
-    except:
+        if len(result) > 0:
+            lid = result[0]['id']
+            current = result[0]['current']
+            maximum = result[0]['maximum']
+
+            if current < maximum:
+                cur = db.execute('SELECT * FROM users WHERE fid=? AND lid=?', [lid, req['fid']])
+                result = cur.fetchall()
+                if len(result) == 0:
+                    db.execute('UPDATE lobbies SET current=current+1 WHERE lat=? AND lon=?', [req['lat'], req['lon']])
+                    db.commit()
+                    db.execute('UPDATE users SET lid=? WHERE fid=?', [lid, req['fid']])
+                    db.commit()
+                    res = { 'success': True }
+                else:
+                    print('youre already in the lobby dude')
+                    res = { 'success': False }
+            else:
+                print('lobby is fkn full')
+                res = { 'success': False }
+        else:
+            print('lol doesnt exist')
+            res = { 'success': False }
+    except Exception as e:
+        print('error xd', e)
         res = { 'success': False }
 
     return jsonify(**res)
