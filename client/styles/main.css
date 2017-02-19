@@ -46,3 +46,15 @@ html, body {
     align-items: center;
     text-align: center;
 }
+
+.mdl-list__item{
+    border-bottom-style: solid;
+    border-bottom-width: 2.5px ;
+    border-bottom-color:grey;
+    width: 90%; 
+    
+}
+
+#otherlobby{
+    padding-left:0;
+}
