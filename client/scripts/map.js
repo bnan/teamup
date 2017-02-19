@@ -7,7 +7,7 @@ function mapDraw() {
 
 	navigator.geolocation.getCurrentPosition(function(position) {
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 12,
+            zoom: 14,
             center: { lat: position.coords.latitude, lng: position.coords.longitude },
             disableDefaultUI: true
         });
@@ -18,7 +18,11 @@ function mapDraw() {
 				var marker = new google.maps.Marker({
 					position: { lat: lobby.lat, lng: lobby.lon },
 					map: map,
-					title: lobby.description
+					title: lobby.description,
+					icon:{ 
+						url: "images/" + lobby.sport + ".png",
+						scaledSize: new google.maps.Size(30,50)
+					}
 				});
     			marker.addListener('click', function() {
         			var dialog = document.getElementById('join-lobby');
