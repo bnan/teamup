@@ -19,7 +19,6 @@
                 <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
                     <a href="#tab-map" class="mdl-layout__tab is-active disabled">Map</a>
                     <a href="#tab-lobby" onclick="fillSelfLobby()" class="mdl-layout__tab disabled">Lobby</a>
-                    <a href="#tab-account" class="mdl-layout__tab disabled">Account</a>
                 </div>
             </header>
 
@@ -45,7 +44,7 @@
                             <div class="mdl-dialog__content">
                                 <h3>Lobby Info</h3>
                                 <ul id="otherlobby"></ul>
-                                <button class=" submit mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" >
+                                <button onclick="joinLobby()" class=" submit mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" >
                                     Join
                                 </button>
                                 <button class=" close mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent" >
@@ -112,18 +111,9 @@
                     <div id="info_lobby" class="page-content">
                         Not Connected to Show Lobby! Must Login!
                     </div>
-                    <ul id="selflobby"></ul>
-                </section>
-
-                <section id="tab-account" class="mdl-layout__tab-panel">
-                    <div id="info_account" class="page-content">
-                        Not Connected to Show Account! Must Login!
-                    </div>
-                    <div style="display:none" id="personal_account" class="page-content">
-                        <center>
-                            <img id="profile_pic" src = ""></img> 
-                        </center>
-                    </div>
+                    <center>
+                        <ul id="selflobby" style="display:none"></ul>
+                    </center>
                 </section>
             </main>
         </div>
@@ -156,9 +146,9 @@
         <script src="scripts/push.js"></script>
         <script src="scripts/material.min.js" defer></script>
 
+        <script src="scripts/map.js"></script>
         <script src="scripts/dom.js"></script>
         <script src="scripts/dialog.js"></script>
-        <script src="scripts/map.js"></script>
         <script src="scripts/facebook.js"></script>
         <script src="scripts/api.js"></script>
 

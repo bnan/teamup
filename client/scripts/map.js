@@ -7,7 +7,7 @@ function mapDraw() {
 
 	navigator.geolocation.getCurrentPosition(function(position) {
         var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 6,
+            zoom: 12,
             center: { lat: position.coords.latitude, lng: position.coords.longitude },
             disableDefaultUI: true
         });
@@ -22,6 +22,8 @@ function mapDraw() {
 				});
     			marker.addListener('click', function() {
         			var dialog = document.getElementById('join-lobby');
+					dialog.lat = lobby.lat;
+					dialog.lon = lobby.lon;
 					fillOtherLobby(lobby.lat, lobby.lon);
         			dialog.showModal();
     			});

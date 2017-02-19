@@ -1,22 +1,51 @@
 function getUsersByLobby(lid, cb) {
 	var url = '/api/getUsersByLobby?lid='+lid;
 	axios.get(url).then(function(response) {
-		cb(response);	
+		cb(response);
 	});
 }
 
 function getLobbyByUser(fid, cb) {
 	var url = '/api/getLobbyByUser?fid='+fid;
 	axios.get(url).then(function(response) {
-		cb(response);	
+		cb(response);
 	});
+}
+
+function joinLobby() {
+    var dialog = document.getElementById('join-lobby');
+	var url = '/api/getLobby?lat=' + dialog.lat + '&lon=' + dialog.lon;
+	axios.get(url).then(function(response) {
+		FB.getLoginStatus(function(response1) {
+			axios.put('/api/joinLobby', {
+				"lat": dialog.lat,
+				"lon": dialog.lon,
+				"lid": response.data.lobby[0].id,
+				"fid": response1.authResponse.userID
+			});
+		});
+	});
+}
+
+function leaveLobby() {
+	FB.getLoginStatus(function(response) {
+		getLobbyByUser(response.authResponse.userID, function(response2){
+			console.log(response);
+			axios.put('/api/leaveLobby', {
+				"lat": response2.data.lobby[0].lat,
+				"lon": response2.data.lobby[0].lon,
+				"lid": response.authResponse.userID
+			});
+		});
+	});
+	window.location.href="/";
 }
 
 function fillSelfLobby() {
 	FB.getLoginStatus(function(response1) {
 		getLobbyByUser(response1.authResponse.userID, function(response2) {
 			getUsersByLobby(response2.data.lobby[0].id, function(response3) {
-				var lobby = document.getElementById("selflobby");
+	            var lobby = document.getElementById("selflobby");
 				while (lobby.firstChild) {
     				lobby.removeChild(lobby.firstChild);
 				}
@@ -32,7 +61,15 @@ function fillSelfLobby() {
 
 					var name = document.createElement("span");
 					name.setAttribute("id", user.fid);
-					FB.api(
+
+                    var messenger = document.createElement("a");
+                    messenger.setAttribute("href","https://m.me/"+user.fid);
+
+                    var messenger_img = document.createElement("img");
+                    messenger_img.setAttribute("src","https://cdn0.iconfinder.com/data/icons/social-media-2092/100/social-33-128.png");
+                    messenger_img.setAttribute("style","width:35%;position:relative;")
+
+                    FB.api(
 						"/"+user.fid,
 						function (response4) {
 							if (response4 && !response4.error) {
@@ -42,12 +79,23 @@ function fillSelfLobby() {
 					);
 					span.appendChild(img);
 					span.appendChild(name);
+                    messenger.appendChild(messenger_img);
+                    span.appendChild(messenger);
 					li.appendChild(span);
 					lobby.appendChild(li);
 				}
+                var size = document.createElement("h3");
+                size.innerText = response2.data.lobby[0].current + '/' + response2.data.lobby[0].maximum;
+                var button_leave = document.createElement("button");
+                button_leave.setAttribute("class", "mdl-button mdl-js-button mdl-button--raised mdl-button--colored");
+                button_leave.setAttribute("onClick", "leaveLobby()")
+                button_leave.innerText = "Leave";
+                lobby.appendChild(size);
+                lobby.appendChild(button_leave);
 			});
 		});
 	});
+
 }
 
 function fillOtherLobby(lat, lon){
@@ -55,11 +103,16 @@ function fillOtherLobby(lat, lon){
 	axios.get(url).then(function(response) {
 		console.log(response);
 		getUsersByLobby(response.data.lobby[0].id, function(response2) {
-				
+
 			var lobby = document.getElementById("otherlobby");
 			while (lobby.firstChild) {
 				lobby.removeChild(lobby.firstChild);
 			}
+
+            var size = document.createElement("h3");
+            size.innerText = response.data.lobby[0].current + '/' + response.data.lobby[0].maximum;
+            lobby.appendChild(size);
+
 			for(const user of response2.data.users) {
 				var li = document.createElement("li");
 				li.setAttribute("class", "mdl-list__item mdl-list__item--threeline");
@@ -72,6 +125,14 @@ function fillOtherLobby(lat, lon){
 
 				var name = document.createElement("span");
 				name.setAttribute("id", user.fid);
+
+                var messenger = document.createElement("a");
+                    messenger.setAttribute("href","https://m.me/"+user.fid);
+
+                var messenger_img = document.createElement("img");
+                messenger_img.setAttribute("src","https://cdn0.iconfinder.com/data/icons/social-media-2092/100/social-33-128.png");
+                messenger_img.setAttribute("style","width:35%;position:relative;")
+
 				FB.api(
 					"/"+user.fid,
 					function (response3) {
@@ -82,6 +143,8 @@ function fillOtherLobby(lat, lon){
 				);
 				span.appendChild(img);
 				span.appendChild(name);
+                messenger.appendChild(messenger_img);
+                span.appendChild(messenger);
 				li.appendChild(span);
 				lobby.appendChild(li);
 			}
@@ -99,23 +162,23 @@ function store() {
         console.log(inputPlayers.value);
     }
     if (document.getElementById('basket').checked) {
-       var sport="basket"; 
+       var sport="basket";
        console.log(sport);
 }
     else if(document.getElementById('foot').checked){
-        var sport="foot"; 
+        var sport="foot";
         console.log(sport);
     }
     else if(document.getElementById('volley').checked){
-        var sport="volley"; 
+        var sport="volley";
         console.log(sport);
     }
     else if(document.getElementById('tennis').checked){
-        var sport="tennis"; 
+        var sport="tennis";
         console.log(sport);
     }
     else if(document.getElementById('other').checked){
-        var sport="other"; 
+        var sport="other";
         console.log(sport);
     }
     var notes= document.getElementById("notes");
@@ -129,5 +192,5 @@ function store() {
     /*Reset fields before close*/
     inputPlayers.value="";
     notes.value="";
-    
+
 }
