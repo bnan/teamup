@@ -149,13 +149,13 @@ function fillOtherLobby(lat, lon){
                 img.setAttribute("style","margin-right:3.5%;");
 
 				var name = document.createElement("span");
-				name.setAttribute("id", user.fid);
+				name.setAttribute("id", "other-"+user.fid);
 
 				FB.api(
 					"/"+user.fid,
 					function (response3) {
 						if (response3 && !response3.error) {
-							document.getElementById(user.fid).innerText = response3.name;
+							document.getElementById("other-"+user.fid).innerText = response3.name;
 						}
 					}
 				);
