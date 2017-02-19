@@ -46,4 +46,13 @@ html, body {
     align-items: center;
     text-align: center;
 }
-
+#join-lobby .mdl-dialog__content {
+    padding: 0;
+}
+#join-lobby .mdl-dialog__title{
+    padding: 0;
+    text-align: center;
+}
+#join-lobby h4{
+    margin: 0;
+}

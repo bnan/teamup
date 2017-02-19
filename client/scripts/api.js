@@ -132,7 +132,17 @@ function fillOtherLobby(lat, lon){
 			while (lobby.firstChild) {
 				lobby.removeChild(lobby.firstChild);
 			}
-
+            
+            var title= document.createElement("h4");
+            title.innerText= response.data.lobby[0].sport;
+            title.setAttribute("class","mdl-dialog__title");
+            title.setAttribute("style","color:black;");
+            lobby.appendChild(title);
+            
+            var description= document.createElement("h6");
+            description.innerText=response.data.lobby[0].description;
+            lobby.appendChild(description);
+            
             var size = document.createElement("h3");
             size.innerText = response.data.lobby[0].current + '/' + response.data.lobby[0].maximum;
             lobby.appendChild(size);
@@ -159,6 +169,7 @@ function fillOtherLobby(lat, lon){
 						}
 					}
 				);
+              
 				span.appendChild(img);
 				span.appendChild(name);
 				li.appendChild(span);
