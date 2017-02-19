@@ -40,3 +40,9 @@ html, body {
     left: 40%;
 }
 
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}

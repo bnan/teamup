@@ -41,6 +41,18 @@ function leaveLobby() {
 	window.location.href="/";
 }
 
+function postLobby(sport, description, lat, lon, maximum, current) {
+    var url = '/api/postLobby';
+    axios.post(url, {
+        sport: sport,
+        description: description,
+        lat: lat,
+        lon: lon,
+        maximum: maximum,
+        current: current
+    });
+}
+
 function fillSelfLobby() {
 	FB.getLoginStatus(function(response1) {
 		getLobbyByUser(response1.authResponse.userID, function(response2) {
@@ -153,44 +165,22 @@ function fillOtherLobby(lat, lon){
 }
 
 function store() {
-    var inputPlayers= document.getElementById("maxplay");
-    if(inputPlayers.value==""){
-        alert("Max players must be filled out");
-        return false;
-        }
-    else{
-        console.log(inputPlayers.value);
-    }
-    if (document.getElementById('basket').checked) {
-       var sport="basket";
-       console.log(sport);
-}
-    else if(document.getElementById('foot').checked){
-        var sport="foot";
-        console.log(sport);
-    }
-    else if(document.getElementById('volley').checked){
-        var sport="volley";
-        console.log(sport);
-    }
-    else if(document.getElementById('tennis').checked){
-        var sport="tennis";
-        console.log(sport);
-    }
-    else if(document.getElementById('other').checked){
-        var sport="other";
-        console.log(sport);
-    }
-    var notes= document.getElementById("notes");
-    if(notes.value==""){
-        alert("Description must be filled out");
-        return false;
-        }
-    else{
-    console.log(notes.value);
-    }
-    /*Reset fields before close*/
-    inputPlayers.value="";
-    notes.value="";
+	var options = {
+		enableHighAccuracy: false,
+		timeout: 5000,
+		maximumAge: 0
+	};
 
+	navigator.geolocation.getCurrentPosition(function(position) {
+        var sport = document.querySelector('input[name="sport"]:checked').value;
+        var description = document.getElementById("description").value;
+        var maximum = document.getElementById("maximum").value;
+
+        console.log('sport', sport);
+        console.log('description', description);
+        console.log('maximum', maximum);
+        console.log('lat', position.coords.latitude);
+        console.log('lon', position.coords.longitude);
+        postLobby(sport, description, position.coords.latitude, position.coords.longitude, maximum, 1);
+	}, function() {}, options);
 }
