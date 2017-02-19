@@ -1,4 +1,12 @@
 var map;
+var markersArray = [];
+
+function clearOverlays() {
+  for (var i = 0; i < markersArray.length; i++ ) {
+    markersArray[i].setMap(null);
+  }
+  markersArray.length = 0;
+}
 
 function mapDraw() {
 	var options = {
@@ -18,12 +26,14 @@ function mapDraw() {
             axios.get(url).then(function(response) {
                 updateMarkers(response);
             });
+
         }, function() {}, options);
 }
 
 function updateMarkers(response){
 		if(!window.localStorage.getItem("nlobbies")) window.localStorage.setItem("nlobbies",JSON.stringify([]));
 		var temp = JSON.parse(window.localStorage.getItem("nlobbies"));
+    clearOverlays();
         for(const lobby of response.data.lobbies) {
             var marker = new google.maps.Marker({
                 position: { lat: lobby.lat, lng: lobby.lon },
@@ -34,13 +44,14 @@ function updateMarkers(response){
                     scaledSize: new google.maps.Size(30,50)
                 }
             });
+            markersArray.push(marker);
             marker.addListener('click', function() {
                 var dialog = document.getElementById('join-lobby');
                 dialog.lat = lobby.lat;
                 dialog.lon = lobby.lon;
                 fillOtherLobby(lobby.lat, lobby.lon);
                 dialog.showModal();
-            });	
+            });
 			var b = true;
 			for(const l of temp) {
 				if(l.lat === lobby.lat && l.lon === lobby.lon) var b = false;
