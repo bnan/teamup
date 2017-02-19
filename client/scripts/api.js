@@ -27,6 +27,18 @@ function joinLobby() {
 	});			
 }
 
+function leaveLobby() {
+	FB.getLoginStatus(function(response) {
+		getLobbyByUser(response.authResponse.userID, function(response2){
+			axios.put('/api/leaveLobby', {
+				"lat": response2.data.lat,
+				"lon": response2.data.lon,
+				"lid": response.authResponse.userID
+			});
+		});
+	});
+}
+
 function fillSelfLobby() {
 	FB.getLoginStatus(function(response1) {
 		getLobbyByUser(response1.authResponse.userID, function(response2) {
