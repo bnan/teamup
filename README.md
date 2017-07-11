@@ -1,6 +1,6 @@
-# Teamup 
- 
-Developed at Shift Appens, a 48h hackathon set in Coimbra, Teamup is an app that helps you find people to play sports with. 
+# Teamup
+
+Developed at Shift Appens, a 48h hackathon set in Coimbra, Teamup is an app that helps you find people to play sports with.
 
 ## Technologies
 
@@ -17,24 +17,18 @@ Developed at Shift Appens, a 48h hackathon set in Coimbra, Teamup is an app that
 
 ## Development
 
-## Dependencies
+### Dependencies
 
 ```
 $ cd server
 $ pip install -r requirements.txt
 ```
 
-## Run
+### Run
 
 ```
 $ cd server
 $ chmod +x start.sh
 $ ./start.sh
-```
-
-```
-$ cd server
-$ chmod +x restart.sh
-$ ./restart.sh
 ```
 
