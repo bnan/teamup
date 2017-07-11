@@ -1,4 +1,4 @@
-# Teamup
+# Team Up
 
 ![Teamup](https://i.imgur.com/1iE9WCt.png)
 
